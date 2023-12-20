@@ -151,7 +151,7 @@ namespace Extreal.Core.Common.Retry
                     action();
                     return Unit.Default;
                 })
-                : null;
+                : (Func<UniTask<Unit>>)null;
 #pragma warning restore CS1998
             return new RetryHandler<Unit>(runAsync, isRetryable, retryStrategy, cancellationToken);
         }
@@ -196,7 +196,7 @@ namespace Extreal.Core.Common.Retry
             IRetryStrategy retryStrategy, CancellationToken cancellationToken = default)
         {
 #pragma warning disable CS1998
-            Func<UniTask<T>> runAsync = func != null ? () => UniTask.Create(async () => func()) : null;
+            Func<UniTask<T>> runAsync = func != null ? () => UniTask.Create(async () => func()) : (Func<UniTask<T>>)null;
 #pragma warning restore CS1998
             return new RetryHandler<T>(runAsync, isRetryable, retryStrategy, cancellationToken);
         }
